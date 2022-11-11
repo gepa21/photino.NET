@@ -45,22 +45,26 @@ public partial class PhotinoWindow
     public static bool IsMacOsPlatform => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
     public static bool IsLinuxPlatform => RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
-    ///<summary>Windows platform only. Gets the handle of the native window. Throws exception if called from platform other than Windows.</summary>
+    ///<summary> Gets the handle of the native window.</summary>
     public IntPtr WindowHandle
     {
         get
         {
+            if (_nativeInstance == IntPtr.Zero)
+                throw new ApplicationException("The Photino window is not initialized yet");
+
             if (IsWindowsPlatform)
             {
-                if (_nativeInstance == IntPtr.Zero)
-                    throw new ApplicationException("The Photino window is not initialized yet");
-
                 var handle = IntPtr.Zero;
                 Invoke(() => handle = Photino_getHwnd_win32(_nativeInstance));
                 return handle;
             }
             else
-                throw new PlatformNotSupportedException($"{nameof(WindowHandle)} is only supported on Windows.");
+            {
+                ulong val = 0;
+                Invoke(() => Photino_GetWindowHandle(_nativeInstance, out val));
+                return new IntPtr(unchecked((Int64)val));
+            }
         }
     }
 

@@ -15,18 +15,17 @@
     <Title>PhotinoNET</Title>
     <RootNamespace>PhotinoNET</RootNamespace>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <IsPackable>true</IsPackable> 
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
-  <Target Name="SetPackageVersion" DependsOnTargets="Build">
-    <PropertyGroup>
-      <PackageVersion>$(Version)</PackageVersion>
-    </PropertyGroup>
-  </Target>
+  <PropertyGroup>
+    <Version>2.3.0</Version>
+    <PackageVersion>2.3.0</PackageVersion>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Photino.Native" Version="2.2.3" />
